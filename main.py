@@ -14,7 +14,8 @@ def main(req):
                              "2. Add my class\n"
                              "3. Add class to database\n"
                              "4. Delete Class\n"
-                             "5. Update Hub"))
+                             "5. Update Hub\n"
+                             "6. All Status\n"))
         if next_act == 0:
             con = False
         elif next_act == 1:
@@ -25,6 +26,22 @@ def main(req):
             update(req, cls)
         elif next_act == 3:
             add_class(all_file)
+        elif next_act == 4:
+            pass
+        elif next_act == 5:
+            update_hub(req)
+        elif next_act == 6:
+            all_status()
+
+def update_hub(req):
+    up = input("What hub requirement will you update?\n")
+    if up in req:
+        req[up] = True
+        print("Successfully updated")
+    elif up == "Writing, Research, and Inquiry" or "Writing-Intensive Course":
+        req['Writing, Research, and Inquiry/Writing-Intensive Course'] = True
+    else:
+        print("No such hub requirement")
 
 
 def add_class(file):
@@ -153,11 +170,16 @@ def read_all_file(all_file):
             classes[clst[0]]["Prerequisite"] = clst[-1]
     return classes
 
+
 def multi_dict(K, atype):
     if K == 1:
         return defaultdict(atype)
     else:
         return defaultdict(lambda: multi_dict(K-1, atype))
+
+
+def all_status():
+    pprint.pprint(req)
 
 
 if __name__ == '__main__':
